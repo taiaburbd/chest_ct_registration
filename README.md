@@ -15,6 +15,8 @@ This project aims to revolutionize medical imaging analysis by leveraging advanc
 - **Image Registration  :** Implements advanced algorithms for aligning and registering medical images.
 - **Data Preprocessing :** Prepares images for analysis, including normalization and augmentation techniques.
 - **Deep Learning with VoxelMorph :** Applies the VoxelMorph deep learning model for analyzing and interpreting medical images.
+- 
+![Landmark point Image](/images/visualize_registration.png)
 
 ## Key Features
 - **Comprehensive Workflow:** From data preparation to deep learning analysis.
