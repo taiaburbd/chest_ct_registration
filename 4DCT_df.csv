@@ -1,5 +1,0 @@
-COPD_Type,folder_path,inhale_image,exhale_image,inhale_landmark,exhale_landmark,Dimensions,Voxels,DisplacementMean,DisplacementStd,cvt_inhale_image,cvt_exhale_image
-copd1,/Users/taiaburrahman/Desktop/Udg/MIRA/FinalProject/dataset/train/copd1,copd1_iBHCT.img,copd1_eBHCT.img,copd1_300_iBH_xyz_r1.txt,copd1_300_eBH_xyz_r1.txt,"(512, 512, 121)","(0.625, 0.625, 2.5)",25.9,11.57,copd1_iBHCT.nii.gz,copd1_eBHCT.nii.gz
-copd2,/Users/taiaburrahman/Desktop/Udg/MIRA/FinalProject/dataset/train/copd2,copd2_iBHCT.img,copd2_eBHCT.img,copd2_300_iBH_xyz_r1.txt,copd2_300_eBH_xyz_r1.txt,"(512, 512, 102)","(0.645, 0.645, 2.5)",21.77,6.46,copd2_iBHCT.nii.gz,copd2_eBHCT.nii.gz
-copd3,/Users/taiaburrahman/Desktop/Udg/MIRA/FinalProject/dataset/train/copd3,copd3_iBHCT.img,copd3_eBHCT.img,copd3_300_iBH_xyz_r1.txt,copd3_300_eBH_xyz_r1.txt,"(512, 512, 126)","(0.652, 0.652, 2.5)",12.29,6.39,copd3_iBHCT.nii.gz,copd3_eBHCT.nii.gz
-copd4,/Users/taiaburrahman/Desktop/Udg/MIRA/FinalProject/dataset/train/copd4,copd4_iBHCT.img,copd4_eBHCT.img,copd4_300_iBH_xyz_r1.txt,copd4_300_eBH_xyz_r1.txt,"(512, 512, 126)","(0.59, 0.59, 2.5)",30.9,13.49,copd4_iBHCT.nii.gz,copd4_eBHCT.nii.gz

@@ -72,7 +72,7 @@ def visualize_registration(fixed_image, moving_image, fixed_landmarks, moving_la
     plt.imshow(fixed_array[60, :, :], cmap='gray')
     plt.scatter(fixed_landmarks[:, 0], fixed_landmarks[:, 1], fixed_landmarks[:, 2], 
                 c='red', marker='o', label='Fixed Landmarks')
-    plt.title(f'Fixed Image {fixed_image.name} with Landmarks')
+    plt.title(f'Fixed Image with Landmarks')
     plt.legend()
 
     plt.subplot(1, 2, 2)

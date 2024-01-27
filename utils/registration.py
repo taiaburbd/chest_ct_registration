@@ -10,7 +10,7 @@ from utils.timer_util import Timer
 from utils.helper import compute_tre, load_landmarks
 
 
-MAIN_PATH           = Path('../FinalProject/').resolve()
+MAIN_PATH       = Path('./').resolve()
 TRAIN_DATA_PATH     = MAIN_PATH / 'dataset' / 'train'
 OUTPUT_DATA_PATH    = MAIN_PATH / 'dataset' / 'output'
 
