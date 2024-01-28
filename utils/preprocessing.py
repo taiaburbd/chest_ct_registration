@@ -5,6 +5,7 @@ import SimpleITK as sitk
 import os
 import nibabel as nib
 from scipy import ndimage as ndi
+from skimage.exposure import equalize_hist
 
 def fill_chest_cavity(image):
     # Convert the image to 8-bit unsigned integer format
@@ -52,22 +53,22 @@ def remove_gantry(image, segmented):
     return removed, contours
 
 
-def check_fov(img, threshold=-975):
-    # Create a copy of the image slice
-    copy_img = img.copy()
-    # Select a specific slice of the image
-    copy_img = copy_img[25, :, :]
-    # Get width and height of the slice
-    width, height = copy_img.shape
-    # Calculate mean intensity of corners of the slice
-    top_left_corner = np.mean(copy_img[0:5, 0:5])
-    top_right_corner = np.mean(copy_img[0:5, width - 5:width])
-    bottom_left_corner = np.mean(copy_img[height - 5:height, 0:5])
-    bottom_right_corner = np.mean(copy_img[height - 5:height, width - 5:width])
+# def check_fov(img, threshold=-975):
+#     # Create a copy of the image slice
+#     copy_img = img.copy()
+#     # Select a specific slice of the image
+#     copy_img = copy_img[25, :, :]
+#     # Get width and height of the slice
+#     width, height = copy_img.shape
+#     # Calculate mean intensity of corners of the slice
+#     top_left_corner = np.mean(copy_img[0:5, 0:5])
+#     top_right_corner = np.mean(copy_img[0:5, width - 5:width])
+#     bottom_left_corner = np.mean(copy_img[height - 5:height, 0:5])
+#     bottom_right_corner = np.mean(copy_img[height - 5:height, width - 5:width])
 
-    # Check if the field of view (FOV) is present in at least three corners
-    return int(top_left_corner < threshold) + int(top_right_corner < threshold) + int(bottom_left_corner < threshold)\
-           + int(bottom_right_corner < threshold) > 2
+#     # Check if the field of view (FOV) is present in at least three corners
+#     return int(top_left_corner < threshold) + int(top_right_corner < threshold) + int(bottom_left_corner < threshold)\
+#            + int(bottom_right_corner < threshold) > 2
 
 def segment_kmeans(image, K=3, attempts=10):
     # Invert the image colors
@@ -99,15 +100,7 @@ def image_segmentation(_img_path, output_path,rg_output_path,rg_mask_output_path
     # Convert the SimpleITK image to a numpy array for processing
     seg_img = sitk.GetArrayFromImage(img_255)
 
-    # Check if the field of view (FOV) is present in the image
-    if check_fov(sitk.GetArrayFromImage(original_img)):
-        # If FOV is present, perform k-means segmentation
-        segmented = segment_kmeans(seg_img)
-        print("\nFov presence: True")
-    else:
-        # If FOV is not present, perform k-means segmentation with K=2
-        segmented = segment_kmeans(seg_img, K=2)
-        print("\nFov presence: False")
+    segmented = segment_kmeans(seg_img)
 
     # Remove gantry artifacts from the segmented image
     removed, gantry_mask = remove_gantry(seg_img, segmented)
@@ -150,8 +143,20 @@ def generate_mask(nifti_file, outputPath):
     # Get the image data
     image_data = image.get_fdata()
 
+    # Min-max normalization
+    # norm_image_data = (image_data - np.min(image_data)) / (np.max(image_data) - np.min(image_data))
+
+    # Apply histogram equalization
+    # eq_image_data = equalize_hist(image_data)
+    # Threshold values based on the histogram analysis
+    lower_threshold = 120
+    upper_threshold = 255
+
     # Apply threshold to create a mask: values between 150 and 255 are set to 0 (black), others are unchanged
-    threshold_image = np.where((image_data > 150) & (image_data <= 255), 0, image_data).astype(np.uint8)
+    threshold_image = np.where((image_data > lower_threshold) & (image_data <= upper_threshold), 0, image_data).astype(np.uint8)
+
+    # # Apply threshold to create a mask: values between 150 and 255 are set to 0 (black), others are unchanged
+    # threshold_image = np.where((image_data > 150) & (image_data <= 255), 0, image_data).astype(np.uint8)
 
     # Morphological operations for segmentation
     struct = np.ones((3, 3, 3))
